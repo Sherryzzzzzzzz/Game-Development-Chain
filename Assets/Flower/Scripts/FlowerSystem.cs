@@ -838,6 +838,11 @@ namespace Flower{
             if(isOnCmdEvent){
                 yield return new WaitUntil(() => isOnCmdEvent == false);
             }
+
+            string currentText = _text;
+            // 这里记录日志
+            DialogLogManager.instance?.LogLine(currentText);
+
             isTextCompleted = true;
             yield return null;
         }
@@ -1092,6 +1097,8 @@ namespace Flower{
                     this.currentTextListIndex++;
                 }else{
                     this.isTextListCompleted = true;
+
+
                 }
             }
             if(this.processMode == ProcessModeType.Auto){

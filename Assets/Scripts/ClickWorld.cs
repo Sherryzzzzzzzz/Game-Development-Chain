@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class ClickWorld : MonoBehaviour
 {
     public UnityEvent OnClickWorld = new UnityEvent();
+
     void Update()
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -17,7 +18,8 @@ public class ClickWorld : MonoBehaviour
         {
             if (hit != null && hit.transform == transform)
             {
-                DialogueSystem.StartDialogue("Live");
+                if(FindObjectOfType<DialogueSystem>())
+                    DialogueSystem.StartDialogue("Live");
                 OnClickWorld.Invoke();
             }
         }

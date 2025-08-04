@@ -20,7 +20,8 @@ public class RandomWalker2D : MonoBehaviour
         objectHeight = sr.bounds.extents.y;
     }
 
-    void Update()
+
+    void FixedUpdate()
     {
         transform.Translate(direction * moveSpeed * Time.deltaTime);
 
