@@ -22,12 +22,12 @@ public class DialogLogManager : Singleton<DialogLogManager>
 
     public void OnEnable()
     {
-        scrollBar.value = 0f;
+        scrollBar.value = 0.01f;
     }
 
     public void Update()
     {
-        if((scrollBar.value < 0f || !scrollBar.gameObject.activeSelf) && Input.mouseScrollDelta.y < 0f)
+        if(((scrollBar.value < 0.01f || !scrollBar.gameObject.activeSelf) && Input.mouseScrollDelta.y < 0f) || Input.GetMouseButtonDown(1))
         {
             FindObjectOfType<DefaultDialogPrefab>().Appear();
             DialogueSystem.instance.canShowNext = true;

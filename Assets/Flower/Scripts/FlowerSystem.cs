@@ -514,6 +514,11 @@ namespace Flower{
                     sceneObj = CreateAsSceneObject(key, imagePrefab, new Vector3(ConvertPixelToUnit(x), ConvertPixelToUnit(y), 0));
                 }
                 sceneObj.name = $"flower-image-{key}";
+
+                Vector3 finalPos = sceneObj.transform.position;
+                Debug.Log($"设置的位置: {ConvertPixelToUnit(x)}, {ConvertPixelToUnit(y)}");
+                Debug.Log($"实际位置: {finalPos}");
+
                 SpriteRenderer spr = sceneObj.GetComponent<SpriteRenderer>();
                 spr.sprite = sp;
                 spr.sortingOrder = orderInLayer;
@@ -522,9 +527,15 @@ namespace Flower{
             }catch(Exception e){
                 throw new Exception($"Set image failed.\n{e}");
             }
-            
+
+
+            sceneObj.transform.position = new Vector3(ConvertPixelToUnit(x), ConvertPixelToUnit(y), 0);
+            Debug.Log("重新设置位置");            
             ApplyEffect(key, effectName);
             yield return new WaitUntil(() => this.animatingList.Count == 0);
+
+
+
         }
         private IEnumerator CmdFunc_remove_Task(List<string> _params)
         {
@@ -862,7 +873,7 @@ namespace Flower{
         }
         private float ConvertPixelToUnit(float val){
             float cameraPPU = GetCameraPPU(Camera.main, screenHeightReference<0 ? Screen.height : screenHeightReference);
-            return val/cameraPPU;
+            return val/ (cameraPPU / 10f);
         }
         private void ApplyEffect(string key, string effectStatement){
             if(effectStatement == "")return;

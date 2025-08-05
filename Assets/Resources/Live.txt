@@ -55,6 +55,7 @@
 [audio,bgm,BGM/リュウラセンの塔 - 景山将太,true,0,audioTransit_1_1000]
 [image,ch,Character/A_3,0,0,15,spFadeIn_1000]
 [lr]我点下了【再来一次】。[w]
+[ShowBloodUI]
 [lr]没有按钮反馈，[lr]只有天花板开始流血，[lr]像是在滴番茄酱。[w]
 女孩（背对我）：欢迎回来。[w]
 我：我这次想跳过前面的部分。[w]

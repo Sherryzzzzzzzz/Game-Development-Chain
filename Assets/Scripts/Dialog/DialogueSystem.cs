@@ -19,10 +19,19 @@ public class DialogueSystem : Singleton<DialogueSystem>
         //DontDestroyOnLoad(this.gameObject);
         fs = FlowerManager.Instance.CreateFlowerSystem("FlowerSample", false);
         fs.SetupDialog();
-        fs.ReadTextFromResource("start");
+
+        if(SceneManager.GetActiveScene().name == "01Dream")
+        {
+
+            fs.ReadTextFromResource("start");
+        }
+
         fs.RegisterCommand("ChangeScene", (List<string> _params) =>
         {
             SceneManager.LoadScene(_params[0]);
+        });
+        fs.RegisterCommand("ShowBloodUI", (List<string> _params) => {
+            BloodUI.instance?.StartFadeIn();
         });
     }
 
@@ -32,12 +41,12 @@ public class DialogueSystem : Singleton<DialogueSystem>
         {
             canShowNext = false;
             FindObjectOfType<DefaultDialogPrefab>().Disappear();
-            DialogLogManager.instance.gameObject.SetActive(true);
+            DialogLogManager.instance?.gameObject.SetActive(true);
             //DialogLogManager.instance.scrollBar.value = 0f;
             isOpenLogPanel = true;
         }
 
-        if (Input.anyKeyDown && canShowNext)
+        if ((Input.anyKeyDown || Input.mouseScrollDelta.y < 0f ) && canShowNext)
         {
             fs.Next();
         }
