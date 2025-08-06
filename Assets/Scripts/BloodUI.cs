@@ -11,7 +11,6 @@ public class BloodUI : Singleton<BloodUI>
     public override void Awake()
     {
         base.Awake();
-        bloodImage = GetComponent<Image>();
         SetAlpha(0);  // ³õÊ¼Òþ²Ø
     }
 
@@ -19,6 +18,12 @@ public class BloodUI : Singleton<BloodUI>
     {
         StopAllCoroutines();
         StartCoroutine(FadeToAlpha(0.5f));
+    }
+
+    public void StartFadeOut()
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeToAlpha(0f));
     }
 
     private IEnumerator FadeToAlpha(float targetAlpha)

@@ -109,4 +109,8 @@
 [lr]弹幕刷过：[lr]“剧情杀！”[lr]“主角疯了吧！”[lr]“这才是真梦核！”[w]
 [lr]我笑了。[lr]因为我忽然记起了那个名字。[w]
 我：你叫——[lr]
+[remove,ch,spFadeOut_1000]
+[remove,bgm,audioTransit_0_1000]
+[ChangeScene,03TrueLive]
+[audio,bgm,BGM/KillKiss - Ave Mujica（Piano）,true,0,audioTransit_1_1000]
 [hide]

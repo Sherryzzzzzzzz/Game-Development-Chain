@@ -33,6 +33,9 @@ public class DialogueSystem : Singleton<DialogueSystem>
         fs.RegisterCommand("ShowBloodUI", (List<string> _params) => {
             BloodUI.instance?.StartFadeIn();
         });
+        fs.RegisterCommand("CloseBloodUI", (List<string> _params) => {
+            BloodUI.instance?.StartFadeOut();
+        });
     }
 
     void Update()

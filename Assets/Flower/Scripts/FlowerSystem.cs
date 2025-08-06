@@ -516,8 +516,8 @@ namespace Flower{
                 sceneObj.name = $"flower-image-{key}";
 
                 Vector3 finalPos = sceneObj.transform.position;
-                Debug.Log($"设置的位置: {ConvertPixelToUnit(x)}, {ConvertPixelToUnit(y)}");
-                Debug.Log($"实际位置: {finalPos}");
+                //Debug.Log($"设置的位置: {ConvertPixelToUnit(x)}, {ConvertPixelToUnit(y)}");
+                //Debug.Log($"实际位置: {finalPos}");
 
                 SpriteRenderer spr = sceneObj.GetComponent<SpriteRenderer>();
                 spr.sprite = sp;
@@ -530,12 +530,9 @@ namespace Flower{
 
 
             sceneObj.transform.position = new Vector3(ConvertPixelToUnit(x), ConvertPixelToUnit(y), 0);
-            Debug.Log("重新设置位置");            
+            //Debug.Log("重新设置位置");            
             ApplyEffect(key, effectName);
             yield return new WaitUntil(() => this.animatingList.Count == 0);
-
-
-
         }
         private IEnumerator CmdFunc_remove_Task(List<string> _params)
         {
