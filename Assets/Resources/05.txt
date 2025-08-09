@@ -1,5 +1,5 @@
 ﻿
-[audio,bgm,BGM/3xm0a-l6k5h,true,0,audioTransit_1_500]
+[audio,bgm,BGM/リュウラセンの塔 - 景山将太,true,0,audioTransit_1_500]
 [show]
 站在远处的向我招手的身影，[r]竟然是我梦中的那个紫发少女......[w]
 我：这...[lr]难道还是在梦里吗？[w]
