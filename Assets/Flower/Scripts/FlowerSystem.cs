@@ -109,7 +109,11 @@ namespace Flower{
         private Dictionary<string, string> prefabPathMap = new Dictionary<string, string>();
         private EventHandler<TextUpdateEventArgs> _defaultTextUpdateHandler;
         private bool _defaultLogEnable=false;
-        
+        //扩展内容:定制标签
+        //private Dictionary<string, int> labelMap = new Dictionary<string, int>();
+        //不做了
+
+
         void Start()
         {
 
@@ -139,6 +143,13 @@ namespace Flower{
             RegisterCommand("async_effect", (List<string> _params) => StartCoroutine(CmdFunc_effect_Task(_params)));
             RegisterCommand("async_audio", (List<string> _params) => StartCoroutine(CmdFunc_audio_Task(_params)));
             RegisterCommand("wait_audio", (List<string> _params) => StartCoroutine(ApplyCmdWaiting(CmdFunc_wait_audio_Task(_params))));
+        //    //扩展内容:标签跳跃
+        //    RegisterCommand("jump", (List<string> _params) => StartCoroutine(CmdFunc_jump_Task(_params)));//出问题找以鸢
+        //    //扩展内容:定制标签
+        //    RegisterCommand("label", (List<string> _params) =>
+        //StartCoroutine(CmdFunc_label_Task(_params)));//出问题还是找以鸢
+        //他妈的怎么这个b文本读取是逐行读取指令的啊我真要红温了...
+        //想做类似分支的东西我估计是做不了了,已经8月12日0:37了就到这吧...
 
             // UI Layer Stuff
             RegisterCommand("ui_image", (List<string> _params) => StartCoroutine(ApplyCmdWaiting(CmdFunc_ui_image_Task(_params))));
@@ -264,7 +275,43 @@ namespace Flower{
             this.isTextListCompleted=false;
             this.currentTextList = new List<string>(textList);
             this.currentTextListResource = "";
+            //以下是扩展的代码，出问题别找我
+            //ParseLabels();
+            //梦碎只需一刻
         }
+        /// <summary>
+        /// 啊呀骇死我力
+        /// 一个逐行读指令的文本系统击碎了我的galgame梦
+        /// </summary>
+        //private void ParseLabels()
+        //{
+        //    labelMap.Clear();
+
+        //    for (int i = 0; i < currentTextList.Count; i++)
+        //    {
+        //        string line = currentTextList[i].Trim();
+
+        //        // 检查是否为标签指令
+        //        if (line.StartsWith("[label,"))
+        //        {
+        //            // 提取标签名
+        //            int endIndex = line.IndexOf(']');
+        //            if (endIndex > 0)
+        //            {
+        //                string content = line.Substring(7, endIndex - 7);
+        //                string[] parts = content.Split(',');
+
+        //                if (parts.Length > 0)
+        //                {
+        //                    string labelName = parts[0].Trim();
+        //                    labelMap[labelName] = i;
+        //                    Debug.Log($"Pre-parsed label: {labelName} at index {i}");
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+        
         public void ReadTextFromResource(string filePath, int index=0){
             // Log($"Read text from file - {filePath}");
             try{
@@ -723,6 +770,57 @@ namespace Flower{
             ApplyEffect(key, effectName);
             yield return new WaitUntil(() => this.animatingList.Count == 0);
         }
+        /// <summary>
+        /// 扩展内容:标签跳跃
+        /// 出问题狠狠批判以鸢
+        /// 失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了
+        /// </summary>
+        /// <param name="_params"></param>
+        /// <returns></returns>
+        //private IEnumerator CmdFunc_jump_Task(List<string> _params)
+        //{
+        //    if (_params.Count < 1)
+        //    {
+        //        Debug.Log("jump command requires 1 parameter: labelName");
+        //        yield break;
+        //    }
+
+        //    string labelName = _params[0];
+
+        //    if (labelMap.ContainsKey(labelName))
+        //    {
+        //        currentTextListIndex = labelMap[labelName];
+        //        Debug.Log($"Jumping to label: {labelName} at index {currentTextListIndex}");
+        //    }
+        //    else
+        //    {
+        //        Debug.Log($"Jump target not found: {labelName}");
+        //    }
+
+        //    yield return null;
+        //}
+        /// <summary>
+        /// 扩展内容:定制标签
+        /// 以鸢做的bug
+        /// 失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了失败了
+        /// </summary>
+        /// <param name="_params"></param>
+        /// <returns></returns>
+        //private IEnumerator CmdFunc_label_Task(List<string> _params)
+        //{
+        //    if (_params.Count < 1)
+        //    {
+        //        Debug.Log("label command requires at least 1 parameter");
+        //        yield break;
+        //    }
+
+        //    string labelName = _params[0];
+
+        //    labelMap[labelName] = currentTextListIndex;
+
+        //    Debug.Log($"Registered label: {labelName} at index {currentTextListIndex}");
+        //    yield return null;
+        //}
         #endregion
 
         #region Messages Core

@@ -9,8 +9,12 @@ public class DialogueSystem : Singleton<DialogueSystem>
 {
     public static FlowerSystem fs;
     public bool canShowNext;
-
     public bool isOpenLogPanel;
+
+    [Header("小游戏配置")]
+    public GameObject QTEPrefab;
+    public FlowerSystemExtension FSysExtension;
+
 
     void Start()
     {
@@ -19,10 +23,10 @@ public class DialogueSystem : Singleton<DialogueSystem>
         //DontDestroyOnLoad(this.gameObject);
         fs = FlowerManager.Instance.CreateFlowerSystem("FlowerSample", false);
         fs.SetupDialog();
-
+        FSysExtension.flowerSystem = fs;
+        MiniGameManager.instance.flowerSystem = fs;
         if(SceneManager.GetActiveScene().name == "01Dream")
         {
-
             fs.ReadTextFromResource("start");
         }
 

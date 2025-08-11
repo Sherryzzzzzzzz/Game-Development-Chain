@@ -17,4 +17,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/03TrueLive.unity
     guid: 216bdd5a126d89245bf07cad46beabb1
+  - enabled: 1
+    path: Assets/Scenes/04TheRealWorld.unity
+    guid: e9e81271d2f0fe24d81513934dd1e0b5
+  - enabled: 1
+    path: Assets/Scenes/05.unity
+    guid: d31cdbfd1a87ac04f9e5378089fb29d8
+  - enabled: 1
+    path: Assets/Scenes/06.unity
+    guid: 9c110bdd68caa0948a3af4623bf29fd2
+  - enabled: 1
+    path: Assets/Scenes/07.unity
+    guid: 787169dfbe3a11e4ca5c8f311b3aad3d
+  - enabled: 1
+    path: Assets/Scenes/08.unity
+    guid: 8f63ef167e2b97c40a3eda32d3074ae1
+  - enabled: 1
+    path: Assets/Scenes/09.unity
+    guid: adf43509b63d9334f8bbd286dac16b24
   m_configObjects: {}
