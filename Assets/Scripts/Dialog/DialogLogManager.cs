@@ -11,7 +11,7 @@ public class DialogLogManager : Singleton<DialogLogManager>
 
     [Header("HistoryLog UI Elements")]
     public RectTransform historyLogParent;
-    public GameObject historyLogItemPrefab;  // ÀúÊ·¶Ô»°ÌõÔ¤ÖÆÌå
+    public GameObject historyLogItemPrefab;  // å†å²å¯¹è¯æ¡é¢„åˆ¶
     public GameObject historyLogPanel;
     public Scrollbar scrollBar;
 
@@ -40,18 +40,18 @@ public class DialogLogManager : Singleton<DialogLogManager>
     {
         if (string.IsNullOrEmpty(line)) return;
 
-        // ÅĞ¶ÏÕûÌõlineÊÇ·ñÊÇÒ»¸öÖĞÀ¨ºÅ°ü¹üµÄÄÚÈİ£¨¿ªÍ·ÊÇ[£¬½áÎ²ÊÇ]£©
-        // ^\[[^\]]*\]$ ±íÊ¾ÕûÌõ×Ö·û´®ÊÇ [ ... ] ¸ñÊ½
+        // åˆ¤æ–­æ•´æ¡lineæ˜¯å¦æ˜¯ä¸€ä¸ªä¸­æ‹¬å·åŒ…è£¹çš„å†…å®¹ï¼ˆå¼€å¤´æ˜¯[ï¼Œç»“å°¾æ˜¯]ï¼‰
+        // ^\[[^\]]*\]$ è¡¨ç¤ºæ•´æ¡å­—ç¬¦ä¸²æ˜¯ [ ... ] æ ¼å¼
         if (Regex.IsMatch(line, @"^\[[^\]]*\]$"))
         {
-            // ÕûÌõÊÇÖĞÀ¨ºÅÄÚÈİ£¬Ö±½Ó·µ»Ø£¬²»¼ÇÂ¼
+            // æ•´æ¡æ˜¯ä¸­æ‹¬å·å†…å®¹ï¼Œç›´æ¥è¿”å›ï¼Œä¸è®°å½•
             return;
         }
 
-        // ·ñÔò£¬É¾³ıËùÓĞÖĞÀ¨ºÅ¼°ÆäÖĞÄÚÈİ£¬±ÈÈç [lr] [w] ¶¼É¾³ı
+        // å¦åˆ™ï¼Œåˆ é™¤æ‰€æœ‰ä¸­æ‹¬å·åŠå…¶ä¸­å†…å®¹ï¼Œæ¯”å¦‚ [lr] [w] éƒ½åˆ é™¤
         string cleanedLine = Regex.Replace(line, @"\[[^\]]*\]", "");
 
-        // È¥³ıÇåÀíºó×Ö·û´®Ç°ºó¶àÓà¿Õ°×
+        // å»é™¤æ¸…ç†åå­—ç¬¦ä¸²å‰åå¤šä½™ç©ºç™½
         cleanedLine = cleanedLine.Trim();
 
         if (!string.IsNullOrEmpty(cleanedLine))
@@ -71,16 +71,16 @@ public class DialogLogManager : Singleton<DialogLogManager>
         dialogueLog.Clear();
     }
 
-    // ¶¯Ì¬Ìí¼ÓÀúÊ·¼ÇÂ¼Ìõ
+    // åŠ¨æ€æ·»åŠ å†å²è®°å½•æ¡
     private void AddHistoryLogItem(string historyLog)
     {
-        // ÊµÀı»¯Ò»¸öĞÂµÄ Item
+        // å®ä¾‹åŒ–ä¸€ä¸ªæ–°çš„ Item
         GameObject historyLogItem = Instantiate(historyLogItemPrefab, historyLogParent);
 
-        // »ñÈ¡ Item ÄÚ²¿µÄ TextMeshPro ×é¼ş
+        // è·å– Item å†…éƒ¨çš„ TextMeshPro ç»„ä»¶
         TextMeshProUGUI logText = historyLogItem.GetComponent<TextMeshProUGUI>();
 
-        // ÉèÖÃ Item ÖĞµÄÎÄ±¾
+        // è®¾ç½® Item ä¸­çš„æ–‡æœ¬
         if (logText != null)
         {
             logText.text = historyLog;

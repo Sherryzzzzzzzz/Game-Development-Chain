@@ -1,5 +1,5 @@
 ﻿ 
- [audio,bgm,BGM/Garden,true,0,audioTransit_1_500]
+[audio,bgm,BGM/Garden,true,0,audioTransit_1_500]
 [show]
 我们倒在血泊中，[lr]我痛苦地睁开眼，[r]看到的却是她沾满泥土，涂满黑血的可爱脸颊。[w]
 她的嘴唇微张，一开一合，[lr]像是还有什么话没有说出来，可还没说出就已无力。[w]

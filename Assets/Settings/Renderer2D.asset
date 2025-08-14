@@ -15,8 +15,9 @@ MonoBehaviour:
   debugShaders:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7, type: 3}
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
-  m_RendererFeatures: []
-  m_RendererFeatureMap: 
+  m_RendererFeatures:
+  - {fileID: 3797122184623765543}
+  m_RendererFeatureMap: 273841478216b234
   m_UseNativeRenderPass: 0
   m_TransparencySortMode: 0
   m_TransparencySortAxis: {x: 0, y: 1, z: 0}
@@ -61,3 +62,28 @@ MonoBehaviour:
   m_DefaultLitMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_DefaultUnlitMaterial: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
   m_DefaultMaskMaterial: {fileID: 2100000, guid: 15d0c3709176029428a0da2f8cecf0b5, type: 2}
+--- !u!114 &3797122184623765543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e8b4dc17b494a15b295c678bb877795, type: 3}
+  m_Name: GlitchVFXFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    RenderingInEditor: 1
+    renderPassEvent: 500
+    materialInfos:
+    - Priority: 0
+      ID: 0
+      Material: {fileID: 2100000, guid: e014c4776be79a743800625aaaf6b8a9, type: 2}
+      Rendering: 1
+    - Priority: 0
+      ID: 1
+      Material: {fileID: 2100000, guid: 67da1286014e2e147ac8b6fb8bece341, type: 2}
+      Rendering: 0

@@ -29,7 +29,6 @@ public class DialogueSystem : Singleton<DialogueSystem>
         {
             fs.ReadTextFromResource("start");
         }
-
         fs.RegisterCommand("ChangeScene", (List<string> _params) =>
         {
             SceneManager.LoadScene(_params[0]);

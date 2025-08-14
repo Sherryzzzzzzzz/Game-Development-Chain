@@ -1,5 +1,6 @@
-﻿
-[show]
+﻿[show]
+[gvfx,playAnim,BlockGlitch,Animation/GVFX/BlockGlitch/BG_Start]
+[gvfx,playAnim,RGBSplit,Animation/GVFX/RGBSplit/RS_FadeToMiddle]
 我...18岁那年会死...[lr]而且是死在她的面前......[w]
 嘀嗒，[lr]嘀嗒，[lr]嘀嗒......[w]
 秒针的声音突然在耳边放大十倍[w]

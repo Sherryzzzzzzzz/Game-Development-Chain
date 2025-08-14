@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using MiniGames;
 
 namespace Flower
 {
@@ -44,6 +45,12 @@ namespace Flower
         {
             // 注册小游戏命令
             flowerSystem.RegisterCommand("minigame", (List<string> _params) => flowerSystem.StartCoroutine(StartMiniGameCoroutine(_params)));
+            
+            //注册GFVX的命令
+            flowerSystem.RegisterCommand("gvfx", GVFXManager.HandleGVFXCommend);
+            
+            //MindStream小游戏的命令
+            flowerSystem.RegisterCommand("mindStream", MindStreamController.HandleInstallMiniGame);
         }
 
         private IEnumerator StartMiniGameCoroutine(List<string> _params)

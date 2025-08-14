@@ -112,7 +112,7 @@ namespace Flower{
         //扩展内容:定制标签
         //private Dictionary<string, int> labelMap = new Dictionary<string, int>();
         //不做了
-
+        
 
         void Start()
         {
@@ -239,7 +239,7 @@ namespace Flower{
                 logHappened(this, new LogEventArgs(logType, message));
             }
         }
-        private void UpdateText(string text){
+        public void UpdateText(string text){
             if(textUpdated !=null){
                 textUpdated(this, new TextUpdateEventArgs(text));
             }
@@ -490,7 +490,7 @@ namespace Flower{
             Resume();
             yield return null;
         }
-        private IEnumerator CmdFunc_dialogHide_Task(List<string> _params)
+        public IEnumerator CmdFunc_dialogHide_Task(List<string> _params)
         {
             float milliSec = 1000;
             try{
@@ -506,7 +506,7 @@ namespace Flower{
             yield return new WaitUntil(() => this.animatingList.Count == 0);
             yield return null;
         }
-        private IEnumerator CmdFunc_dialogShow_Task(List<string> _params)
+        public IEnumerator CmdFunc_dialogShow_Task(List<string> _params)
         {
             float milliSec = 1000;
             try{
