@@ -106,4 +106,5 @@
 好想看直播啊~~[w]
 我才不会死，我要和主播结婚[w]
 [remove,bgm,audioTransit_0_1000]
+[ChangeScene,02Livebroadcast]
 [hide]

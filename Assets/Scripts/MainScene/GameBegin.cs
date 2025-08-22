@@ -33,7 +33,7 @@ public class GameBegin
     public IEnumerator ToNextScene()
     {
         yield return new WaitForSeconds(2);
-
+        //change
         SceneManager.LoadScene("01Dream");
     }
     

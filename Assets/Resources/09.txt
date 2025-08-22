@@ -48,7 +48,7 @@ AI：是的，博士，我就是你的大脑。[w]
 “博士，我承认你真是个疯子。”[w]
 我：谢谢......[w]
 [remove,ch,spFadeOut_1000]
-[remove,BG,spFadeOut_1000]
 [remove,bgm,audioTransit_0_1000]
+[ChangeScene,10]
 [hide]
 
