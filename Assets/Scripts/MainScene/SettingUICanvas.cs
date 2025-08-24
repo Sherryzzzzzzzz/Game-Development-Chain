@@ -64,7 +64,7 @@ public class SettingUICanvas : MonoBehaviour
     public void OnCloseSetting()
     {
         character_2.GetComponent<RectTransform>().DOAnchorPos(new Vector2(277, -1600), 0.5f);
-        panel.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 1000), 0.5f);
+        panel.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 2000), 0.5f);
         OnCloseButtons();
     }
     public void OnCloseButtons()
