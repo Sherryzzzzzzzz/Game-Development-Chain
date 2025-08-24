@@ -31,6 +31,7 @@ namespace Flower{
         public FlowerSystem CreateFlowerSystem(string key, bool elementsDestroyOnLoad=true){
             if(flowerSystemMap.ContainsKey(key)){
                 if(flowerSystemMap[key] != null){
+                    return flowerSystemMap[key];
                     throw new Exception($"Create FlowerSystem failed. key - {key} already exists.");
                 }
             }

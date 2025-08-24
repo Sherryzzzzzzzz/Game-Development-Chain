@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UIElements;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 using Image = UnityEngine.UI.Image;
 
 
@@ -11,9 +12,13 @@ public class SpecialButton : MonoBehaviour, IPointerExitHandler,IPointerEnterHan
     public MainScenePanel mainScenePanel;
     
     Vector3 targetPosition;
-
+    Vector3 initPosition;
     private int count = 0;
- 
+    private void Awake()
+    {
+        initPosition = transform.position;
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (count <= 10)
@@ -48,6 +53,10 @@ public class SpecialButton : MonoBehaviour, IPointerExitHandler,IPointerEnterHan
             buttonImage.color = color;
             yield return new WaitForSeconds(0.1f);
         }
+        mainScenePanel.settingButton.interactable = true;
+        buttonImage.color = new Color(1, 1, 1, 1);
+        transform.position = initPosition;
+        count = 0;
         mainScenePanel.ShowSpecial();
         mainScenePanel.PlayAudio(mainScenePanel.ciallo);
     }

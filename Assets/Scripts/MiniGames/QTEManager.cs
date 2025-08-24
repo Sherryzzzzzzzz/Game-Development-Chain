@@ -80,6 +80,8 @@ public class QTEManager : MonoBehaviour
             ShowResultFeedback(qteResult);
             yield return new WaitForSeconds(qteResult ? successDelay : failureDelay);
             promptPanel.alpha = 0;
+            promptPanel.blocksRaycasts = false;  // 取消遮挡，允许点击穿透
+            promptPanel.interactable = false;    // 禁用交互（可选）
             resultText.gameObject.SetActive(false);
             backgroundOverlay.color = new Color(0, 0, 0, 0.5f);
         }
@@ -124,6 +126,8 @@ public class QTEManager : MonoBehaviour
     private void ResetUI()
     {
         promptPanel.alpha = 0;
+        promptPanel.blocksRaycasts = false;
+        promptPanel.interactable = false;
         resultText.gameObject.SetActive(false);
         finalResultText.gameObject.SetActive(false);
         backgroundOverlay.gameObject.SetActive(false);
@@ -138,6 +142,9 @@ public class QTEManager : MonoBehaviour
         progressBar.value = 1f;
         timerText.text = reactionTime.ToString("F1");
         promptPanel.alpha = 1;
+        promptPanel.blocksRaycasts = true;
+        promptPanel.interactable = true;
+
     }
 
     private void UpdateProgressBar(float progress)
@@ -161,6 +168,8 @@ public class QTEManager : MonoBehaviour
     private void ShowResultFeedback(bool success)
     {
         promptPanel.alpha = 0;
+        promptPanel.blocksRaycasts = false;
+        promptPanel.interactable = false;
         resultText.gameObject.SetActive(true);
         if (success)
         {

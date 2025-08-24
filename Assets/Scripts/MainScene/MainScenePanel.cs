@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,12 +14,14 @@ public class MainScenePanel : MonoBehaviour
     [SerializeField] private Image character_2;
     [SerializeField] private GameObject buttonPanel;
     [SerializeField] public Button startButton;
+    [SerializeField] public Button loadButton;
     [SerializeField] public Button settingButton;
     [SerializeField] public Button exitButton;
     [SerializeField] public AudioClip clickButton;
     [SerializeField] public AudioClip appearImage;
     [SerializeField] public AudioClip ciallo;
-    
+    [Header("设置")]
+    public GameObject settingObject;
     private GameBegin gameBegin;
     private AudioSource audioSource;
     [NonSerialized] public Rect mainPanelRect;
@@ -31,7 +34,7 @@ public class MainScenePanel : MonoBehaviour
     public float intervalTime;
     public int repeatTimes;
 
-
+    public List<AudioSource> audioSources;
     void Awake()
     {
         
@@ -54,8 +57,9 @@ public class MainScenePanel : MonoBehaviour
         gameBegin = gameBegin == null ? new GameBegin(this) : gameBegin;
         if (gameBegin != null)
         {
-            startButton.onClick.RemoveListener(gameBegin.startGame);
+            startButton.onClick.RemoveAllListeners();
             startButton.onClick.AddListener(gameBegin.startGame);
+            startButton.onClick.AddListener(() => FadeOut());
         }
         else
         {
@@ -67,11 +71,12 @@ public class MainScenePanel : MonoBehaviour
         settingButton.onClick.AddListener(specialSetting.OnClick);
         exitButton.onClick.AddListener(clickButtonAction);
         exitButton.onClick.AddListener(Application.Quit);
-
+        loadButton.onClick.AddListener(clickButtonAction);
+        loadButton.onClick.AddListener(() => GameObject.Instantiate(Resources.Load<GameObject>("SaveGameCanvas")));
         
     }
 
-    private void PlayClickButton()
+    public void PlayClickButton()
     {
         PlayAudio(clickButton);
     }
@@ -83,6 +88,35 @@ public class MainScenePanel : MonoBehaviour
 
     public void ShowSpecial()
     {
-        character_2.transform.DOMoveY(-character_2.transform.position.y, 0.5f);
+        character_2.GetComponent<RectTransform>().DOAnchorPos(new Vector2(277, 200), 0.5f);
+        settingObject.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0,0),0.5f);
+        settingObject.GetComponent<SettingUICanvas>().OnOpenButtons();
+    }
+    // 调用此方法开始淡出
+    public void FadeOut()
+    {
+        StartCoroutine(FadeOutCoroutine());
+    }
+
+    private IEnumerator FadeOutCoroutine()
+    {
+        for(int i = 0; i < audioSources.Count; i++)
+        {
+            float startVolume = audioSources[i].volume;
+
+            // 逐渐降低音量
+            while (audioSources[i].volume > 0)
+            {
+                audioSources[i].volume -= startVolume * Time.deltaTime / 2f;
+                yield return null;
+            }
+
+            // 完全停止音频
+            audioSource.Stop();
+
+            // 可选：重置音量（如果后续还要播放）
+            audioSource.volume = startVolume;
+        }
+
     }
 }

@@ -73,6 +73,8 @@ namespace MiniGames
         {
             cProcess = 0;
             UICanvasGroup.alpha = 1;
+            UICanvasGroup.blocksRaycasts = true;  
+            UICanvasGroup.interactable = true;    
             StartCoroutine(StartSetupTextCoroutine());
         }
 
@@ -80,6 +82,8 @@ namespace MiniGames
         {
             Debug.Log(cProcess);
             UICanvasGroup.alpha = 0;
+            UICanvasGroup.blocksRaycasts = false;  // 取消遮挡，允许点击穿透
+            UICanvasGroup.interactable = false;    // 禁用交互（可选）
         }
 
         private bool oldIsHold;

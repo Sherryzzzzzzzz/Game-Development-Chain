@@ -311,7 +311,10 @@ namespace Flower{
         //        }
         //    }
         //}
-        
+        public void RemoveAllText()
+        {
+            this.currentTextList.Clear();
+        }
         public void ReadTextFromResource(string filePath, int index=0){
             // Log($"Read text from file - {filePath}");
             try{
@@ -342,6 +345,7 @@ namespace Flower{
             try{
                 var dialogPrefab = LoadResource<GameObject>(resourcePath);
                 var dialog = CreateAsSceneObject("_Dialog", dialogPrefab, Vector3.zero, false);
+                Debug.Log(dialog.name);
                 if(applyDefaultTextUpdateEvent){
                     try{
                         var e = typeof(FlowerSystem).GetEvent("textUpdated");
@@ -372,7 +376,9 @@ namespace Flower{
             try{
                 var buttonGroupPrefab = LoadResource<GameObject>(resourcePath);
                 CreateAsSceneObject("_ButtonGroup", buttonGroupPrefab, Vector3.zero, false);
-            }catch(Exception e){
+                Debug.Log(buttonGroupPrefab.name);
+            }
+            catch(Exception e){
                 Log(e.ToString(), LogType.Error);
             }
         }
@@ -409,6 +415,7 @@ namespace Flower{
             try{
                 var UIStagePrefab = LoadResource<GameObject>(resourcePath);
                                 var uiStage = CreateAsSceneObject("_UIStage_"+key, UIStagePrefab, Vector3.zero, false);
+                Debug.Log(uiStage.name);
                 uiStage.GetComponent<Canvas>().sortingOrder = sortLayer;
             }catch(Exception e){
                 Log(e.ToString(), LogType.Error);
@@ -499,6 +506,8 @@ namespace Flower{
             try{
                 CanvasGroup canvasGroup = GetSceneObject("_Dialog").GetComponent<CanvasGroup>();
                 canvasGroup.alpha = 1;
+                canvasGroup.blocksRaycasts = true;  
+                canvasGroup.interactable = true;    
                 EffectCanvasGroupAlphaTransit("_Dialog", new List<string>(){"0",milliSec.ToString()});
             }catch(Exception e){
                 throw new Exception($"Hide failed.\n{e}");
@@ -515,6 +524,8 @@ namespace Flower{
             try{
                 CanvasGroup canvasGroup = GetSceneObject("_Dialog").GetComponent<CanvasGroup>();
                 canvasGroup.alpha = 0;
+                canvasGroup.blocksRaycasts = false;  // 取消遮挡，允许点击穿透
+                canvasGroup.interactable = false;    // 禁用交互（可选）
                 EffectCanvasGroupAlphaTransit("_Dialog", new List<string>(){"1",milliSec.ToString()});
             }catch(Exception e){
                 throw new Exception($"Show failed.\n{e}");
@@ -561,7 +572,11 @@ namespace Flower{
                     sceneObj = CreateAsSceneObject(key, imagePrefab, new Vector3(ConvertPixelToUnit(x), ConvertPixelToUnit(y), 0));
                 }
                 sceneObj.name = $"flower-image-{key}";
-
+                DialogueSystem.instance.gameObjects.Add(sceneObj);
+                if(key.Length > 3 || key == "BG")
+                {
+                    sceneObj.AddComponent<SpriteFullScreen>();
+                }
                 Vector3 finalPos = sceneObj.transform.position;
                 //Debug.Log($"设置的位置: {ConvertPixelToUnit(x)}, {ConvertPixelToUnit(y)}");
                 //Debug.Log($"实际位置: {finalPos}");
@@ -645,7 +660,9 @@ namespace Flower{
                     throw new Exception($"Particle - {key} already exists.");
                 }
                 sceneObj.name = $"flower-particle-{key}";
-            }catch(Exception e){
+                Debug.Log(sceneObj.name);
+            }
+            catch(Exception e){
                 throw new Exception($"Set particle failed.\n{e}");
             }
             yield return null;
@@ -687,7 +704,10 @@ namespace Flower{
                 audioSource.volume = volume;
                 audioSource.Play();
                 sceneObj.name = $"flower-audio-{key}";
-            }catch(Exception e){
+                DialogueSystem.instance.gameObjects.Add(sceneObj);
+                DialogueSystem.instance.audioObjects.Add(audioSource);
+            }
+            catch(Exception e){
                 throw new Exception($"Set audio failed.\n{e}");
             }
 
@@ -758,6 +778,7 @@ namespace Flower{
                     sceneObj = CreateAsSceneObject(key, imagePrefab, new Vector3(ConvertPixelToUnit(x), ConvertPixelToUnit(y), 0));
                 }
                 sceneObj.name = $"flower-ui-image-{key}";
+                Debug.Log(sceneObj.name);
                 sceneObj.transform.SetParent(uiStage.transform);
                 Image img = sceneObj.GetComponent<Image>();
                 img.sprite = sp;
@@ -1023,6 +1044,33 @@ namespace Flower{
         #endregion
 
         #region Effect Tasks
+        private IEnumerator SafeEffectTask<T>(
+    string key,
+    T target,
+    float endTime,
+    Action<float> updateAction,
+    Action onComplete = null
+) where T : UnityEngine.Object // 限制为Unity可销毁对象
+        {
+            float elapsed = 0;
+
+            while (elapsed < endTime)
+            {
+                // 检查目标是否已被销毁
+                if (target == null || (target is Component c && c.gameObject == null))
+                {
+                    Debug.LogWarning($"{key} 的目标对象已被销毁，终止协程");
+                    yield break; // 提前终止
+                }
+
+                elapsed += Time.deltaTime;
+                float percent = Mathf.Clamp01(elapsed / endTime);
+                updateAction?.Invoke(percent);
+                yield return null;
+            }
+
+            onComplete?.Invoke();
+        }
         public IEnumerator EffectTimerTask(string key, float endTime, Action<float> effectTimerFunction){
             animatingList.Add(key);
             float currentTime = 0;
@@ -1035,29 +1083,94 @@ namespace Flower{
             animatingList.RemoveAt(_keyIndex);
             yield return null;
         }
-        private IEnumerator ChangeCanvasGroupAlphaTask(string key, CanvasGroup canvasGroup ,float startAlpha, float endAlpha, float endTime=1){
-            yield return EffectTimerTask(key, endTime, (percent)=>{
-                canvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, percent);
+        private IEnumerator ChangeCanvasGroupAlphaTask(
+    string key,
+    CanvasGroup canvasGroup,
+    float startAlpha,
+    float endAlpha,
+    float endTime = 1
+)
+        {
+            yield return SafeEffectTask(key, canvasGroup, endTime, (percent) =>
+            {
+                if (canvasGroup != null)
+                {
+                    canvasGroup.alpha = Mathf.Lerp(startAlpha, endAlpha, percent);
+                    if (startAlpha > endAlpha)
+                    {
+                        canvasGroup.blocksRaycasts = false;
+                        canvasGroup.interactable = false;
+                    }
+                    else
+                    {
+                        canvasGroup.blocksRaycasts = true;
+                        canvasGroup.interactable = true;
+                    }
+                }
             });
         }
-        private IEnumerator ChangeSpriteColorTask(string key, SpriteRenderer spr, Color startColor, Color endColor, float endTime=1){
-            yield return EffectTimerTask(key, endTime, (percent)=>{
-                spr.color = Color.Lerp(startColor, endColor, percent);
+        private IEnumerator ChangeSpriteColorTask(
+    string key,
+    SpriteRenderer spr,
+    Color startColor,
+    Color endColor,
+    float endTime = 1
+)
+        {
+            yield return SafeEffectTask(key, spr, endTime, (percent) =>
+            {
+                if (spr != null)
+                {
+                    spr.color = Color.Lerp(startColor, endColor, percent);
+                }
             });
         }
-        private IEnumerator ChangePositionTask(string key, GameObject obj, Vector3 fromPos, Vector3 toPos, float endTime=1){
-            yield return EffectTimerTask(key, endTime, (percent)=>{
-                obj.transform.position = Vector3.Lerp(fromPos, toPos, percent);
+        private IEnumerator ChangePositionTask(
+    string key,
+    GameObject obj,
+    Vector3 fromPos,
+    Vector3 toPos,
+    float endTime = 1
+)
+        {
+            yield return SafeEffectTask(key, obj, endTime, (percent) =>
+            {
+                if (obj != null)
+                {
+                    obj.transform.position = Vector3.Lerp(fromPos, toPos, percent);
+                }
             });
         }
-        private IEnumerator ChangeAudioVolumeTask(string key, AudioSource audioSource, float startVolume, float endVolume, float endTime=1){
-            yield return EffectTimerTask(key, endTime, (percent)=>{
-                audioSource.volume = Mathf.Lerp(startVolume, endVolume, percent);
+        private IEnumerator ChangeAudioVolumeTask(
+    string key,
+    AudioSource audioSource,
+    float startVolume,
+    float endVolume,
+    float endTime = 1
+)
+        {
+            yield return SafeEffectTask(key, audioSource, endTime, (percent) =>
+            {
+                if (audioSource != null)
+                {
+                    audioSource.volume = Mathf.Lerp(startVolume, endVolume, percent);
+                }
             });
         }
-        private IEnumerator ChangeUIImageColorTask(string key, Image image ,Color startColor, Color endColor, float endTime=1){
-            yield return EffectTimerTask(key, endTime, (percent)=>{
-                image.color = Color.Lerp(startColor, endColor, percent);
+        private IEnumerator ChangeUIImageColorTask(
+     string key,
+     Image image,
+     Color startColor,
+     Color endColor,
+     float endTime = 1
+ )
+        {
+            yield return SafeEffectTask(key, image, endTime, (percent) =>
+            {
+                if (image != null)
+                {
+                    image.color = Color.Lerp(startColor, endColor, percent);
+                }
             });
         }
         #endregion

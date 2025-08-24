@@ -1,5 +1,6 @@
 [image,ch,Character/B_1,0,0,15,spFadeIn_1000]
 [image,ch,Character/B_1,0,0,15,spFadeIn_1000]
+[audio,bgm,BGM/KillKiss - Ave Mujica（Piano）,true,0,audioTransit_1_1000]
 [show]
 [gvfx,playAnim,RGBSplit,Animation/GVFX/RGBSplit/RS_FadeToMiddle]
 Mutis。[w]

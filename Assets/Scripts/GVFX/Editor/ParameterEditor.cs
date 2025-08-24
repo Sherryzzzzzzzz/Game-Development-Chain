@@ -72,7 +72,7 @@ public class ParameterEditor : UnityEditor.Editor
                 }
                 else
                 {
-                        Debug.Log(2222);
+                        //Debug.Log(2222);
                         if (hasGetBuffer)
                         {
                                 m.Rendering = bufferIsRendering;

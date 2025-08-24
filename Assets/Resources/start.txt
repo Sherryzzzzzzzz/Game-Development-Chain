@@ -98,13 +98,4 @@
 [remove,ch,spFadeOut_1000]
 [remove,bgm,audioTransit_0_1000]
 [ChangeScene,02Livebroadcast]
-[audio,bgm,BGM/ホドモエシティ (帆巴市) - 景山将太,true,0,audioTransit_1_1000]
-做的什么鬼梦，
-[gvfx,stopAll]
-[lr]欸，[lr]我怎么在电脑桌睡着了，主播开播了[w]
-这下不得不看了~~4646~666[w]
-好想看直播啊~~[w]
-我才不会死，我要和主播结婚[w]
-[remove,bgm,audioTransit_0_1000]
-[ChangeScene,02Livebroadcast]
-[hide]
+

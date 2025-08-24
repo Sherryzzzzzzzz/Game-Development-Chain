@@ -80,7 +80,7 @@ public class GVFXManager : MonoBehaviour
             {
                 _instance._animator = _instance.gameObject.AddComponent(typeof(Animator)) as Animator;
             }
-            //GameObject.DontDestroyOnLoad(componentInScene);
+            //GameObject.DontDestroyOnLoad(_instance);
             return;
         }
             
