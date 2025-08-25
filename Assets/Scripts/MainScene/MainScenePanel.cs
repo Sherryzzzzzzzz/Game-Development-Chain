@@ -88,7 +88,7 @@ public class MainScenePanel : MonoBehaviour
 
     public void ShowSpecial()
     {
-        character_2.GetComponent<RectTransform>().DOAnchorPos(new Vector2(277, 200), 0.5f);
+        character_2.GetComponent<RectTransform>().DOAnchorPos(new Vector2(450, -310), 0.5f);
         settingObject.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0,0),0.5f);
         settingObject.GetComponent<SettingUICanvas>().OnOpenButtons();
     }

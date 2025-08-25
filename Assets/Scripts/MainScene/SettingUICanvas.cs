@@ -56,14 +56,14 @@ public class SettingUICanvas : MonoBehaviour
             if(SceneManager.GetActiveScene().name != "MainScene" && SceneManager.GetActiveScene().name != "End")
             {
                 OnOpenButtons();
-                character_2.GetComponent<RectTransform>().DOAnchorPos(new Vector2(277, 200), 0.5f);
+                character_2.GetComponent<RectTransform>().DOAnchorPos(new Vector2(450, -310), 0.5f);
                 panel.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 0), 0.5f);
             }
         }
     }
     public void OnCloseSetting()
     {
-        character_2.GetComponent<RectTransform>().DOAnchorPos(new Vector2(277, -1600), 0.5f);
+        character_2.GetComponent<RectTransform>().DOAnchorPos(new Vector2(450, -4000), 0.5f);
         panel.GetComponent<RectTransform>().DOAnchorPos(new Vector2(0, 2000), 0.5f);
         OnCloseButtons();
     }
