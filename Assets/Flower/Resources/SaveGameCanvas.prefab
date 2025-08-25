@@ -459,7 +459,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -438, y: -228}
+  m_AnchoredPosition: {x: -484.2, y: -125.9}
   m_SizeDelta: {x: 105, y: 115}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1116647208333288022
@@ -1956,8 +1956,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 522, y: -312}
-  m_SizeDelta: {x: 140, y: 110}
+  m_AnchoredPosition: {x: 3, y: 367}
+  m_SizeDelta: {x: 270, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6445893880153279161
 CanvasRenderer:
@@ -1987,7 +1987,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0e75dcdf44d86ef4391d564a68264fe7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 02cf9901d8706864fb32435d714401f8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2856,8 +2856,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.9843, y: -4.6613}
-  m_SizeDelta: {x: 108.4178, y: 81.6484}
+  m_AnchoredPosition: {x: 13.5, y: -20}
+  m_SizeDelta: {x: 224.2587, y: 81.6484}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6493756557973321212
 CanvasRenderer:
@@ -2880,7 +2880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.5529412, g: 0, b: 0.854902, a: 1}
+  m_Color: {r: 0.47375065, g: 0, b: 0.8396226, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2889,7 +2889,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 424fdcf44bc096e4daa3d0db775c6e7b, type: 3}
-    m_FontSize: 32
+    m_FontSize: 41
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
@@ -2900,7 +2900,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.15
-  m_Text: " \u56DE\u5230\n\u4E3B\u754C\u9762"
+  m_Text: "\u56DE\u5230\u4E3B\u754C\u9762"
 --- !u!1 &7907935520794173732
 GameObject:
   m_ObjectHideFlags: 0
@@ -3207,7 +3207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 0.56078434}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

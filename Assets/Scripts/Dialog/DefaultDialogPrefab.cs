@@ -9,18 +9,22 @@ public class DefaultDialogPrefab : MonoBehaviour
 {
     public Image dialogBox;
     public Text dialogText;
+    public Image tag;
     private CanvasGroup canvasGroup;
     //private Color dialogBoxColor;
     //private Color dialogTextColor;
-    [Header("ÀúÊ·¼ÇÂ¼")]
+    [Header("å†å²è®°å½•")]
     public Button historyButton;
-    [Header("´æµµ")]
+    [Header("å­˜æ¡£")]
     public Button saveGameButton;
-    [Header("¿ì½ø")]
+    [Header("å¿«è¿›")]
     public Button fastForwardButton;
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
+        // åˆå§‹åŒ–æ—¶éšè—tag
+        if (tag != null)
+            tag.gameObject.SetActive(false);
     }
     private void OnEnable()
     {
@@ -64,6 +68,9 @@ public class DefaultDialogPrefab : MonoBehaviour
         {
             GetComponent<AudioSource>().Play();
             DialogueSystem.instance.isFastForward = !DialogueSystem.instance.isFastForward;
+            // å¿«è¿›æ—¶éšè—tag
+            if (tag != null)
+                tag.gameObject.SetActive(false);
         });
         historyButton.onClick.AddListener(() =>
         {
@@ -83,8 +90,11 @@ public class DefaultDialogPrefab : MonoBehaviour
     public void Disappear()
     {
         canvasGroup.alpha = 0;
-        canvasGroup.blocksRaycasts = false;  // È¡ÏûÕÚµ²£¬ÔÊĞíµã»÷´©Í¸
-        canvasGroup.interactable = false;    // ½ûÓÃ½»»¥£¨¿ÉÑ¡£©
+        canvasGroup.blocksRaycasts = false;  // å–æ¶ˆé®æŒ¡ï¼Œå…è®¸ç‚¹å‡»ç©¿é€
+        canvasGroup.interactable = false;    // ç¦ç”¨äº¤äº’ï¼ˆå¯é€‰ï¼‰
+        // éšè—tag
+        if (tag != null)
+            tag.gameObject.SetActive(false);
         //dialogBox.color = Color.clear;
         //dialogText.color = Color.clear;
     }
@@ -92,9 +102,23 @@ public class DefaultDialogPrefab : MonoBehaviour
     public void Appear()
     {
         canvasGroup.alpha = 1;
-        canvasGroup.blocksRaycasts = true;  // È¡ÏûÕÚµ²£¬ÔÊĞíµã»÷´©Í¸
-        canvasGroup.interactable = true;    // ½ûÓÃ½»»¥£¨¿ÉÑ¡£©
+        canvasGroup.blocksRaycasts = true;  // å–æ¶ˆé®æŒ¡ï¼Œå…è®¸ç‚¹å‡»ç©¿é€
+        canvasGroup.interactable = true;    // ç¦ç”¨äº¤äº’ï¼ˆå¯é€‰ï¼‰
         //dialogBox.color = dialogBoxColor;
         //dialogText.color = dialogTextColor;
+    }
+    
+    // æ–°å¢æ–¹æ³•ï¼šåœ¨å¯¹è¯æ’­æ”¾ç»“æŸåæ˜¾ç¤ºtag
+    public void ShowTag()
+    {
+        if (tag != null)
+            tag.gameObject.SetActive(true);
+    }
+    
+    // æ–°å¢æ–¹æ³•ï¼šåœ¨å¯¹è¯æ’­æ”¾å¼€å§‹æ—¶éšè—tag
+    public void HideTag()
+    {
+        if (tag != null)
+            tag.gameObject.SetActive(false);
     }
 }

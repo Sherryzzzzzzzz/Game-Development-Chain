@@ -23,6 +23,12 @@ public class DialogueSystem : Singleton<DialogueSystem>
     public FlowerSystemExtension FSysExtension;
 
     public DefaultDialogPrefab defaultDialog;
+    
+    // 添加一个变量来跟踪上一次的等待状态
+    private bool lastWaitingForNext = false;
+    // 添加计时器和标志位
+    private float lastTextUpdateTime = 0f;
+    private bool shouldShowTag = false;
 
     private void Start()
     {
@@ -45,6 +51,30 @@ public class DialogueSystem : Singleton<DialogueSystem>
         fs.RegisterCommand("CloseBloodUI", (List<string> _params) => {
             BloodUI.instance?.StartFadeOut();
         });
+        
+        // 注册文本播放完成事件，播放完成后显示tag
+        // 修改事件注册方式，使用textUpdated事件来监听文本更新
+        fs.textUpdated += (sender, args) => {
+            // 更新最后文本更新时间
+            lastTextUpdateTime = Time.time;
+            shouldShowTag = true;
+            
+            // 只有当状态从非等待变为等待时，才准备显示tag
+            // 这意味着文本显示完成，正在等待用户输入
+            if (fs.isWaitingForNext && !lastWaitingForNext) {
+                // 不再立即显示tag，而是设置标志位
+                // defaultDialog?.ShowTag();
+            } 
+            // 只有当状态从等待变为非等待时，才隐藏tag
+            // 这意味着用户点击了继续，开始新的文本显示
+            else if (!fs.isWaitingForNext && lastWaitingForNext) {
+                defaultDialog?.HideTag();
+                shouldShowTag = false;
+            }
+            
+            // 更新lastWaitingForNext状态
+            lastWaitingForNext = fs.isWaitingForNext;
+        };
     }
     public void OnClickHistoryButton()
     {
@@ -57,6 +87,13 @@ public class DialogueSystem : Singleton<DialogueSystem>
 
     void Update()
     {
+        // 检查是否需要显示tag（0.5秒内没有文本更新）
+        if (shouldShowTag && Time.time - lastTextUpdateTime >= 0.5f)
+        {
+            defaultDialog?.ShowTag();
+            shouldShowTag = false;
+        }
+        
         if (SceneManager.GetActiveScene().name == "MainScene" || SceneManager.GetActiveScene().name == "End") return;
         // 检查当前选中的对象是否是Button
         bool isClickingButton = EventSystem.current.currentSelectedGameObject != null &&
@@ -72,6 +109,11 @@ public class DialogueSystem : Singleton<DialogueSystem>
         if ((!historyObject.activeSelf&&Input.anyKeyDown && !isClickingButton && !Input.GetKeyDown(KeyCode.Escape)) || (Input.mouseScrollDelta.y < 0f && canShowNext))
         {
             isFastForward = false;
+            // 在继续对话前隐藏tag
+            defaultDialog?.HideTag();
+            // 重置状态跟踪变量
+            lastWaitingForNext = false;
+            shouldShowTag = false;
             fs.Next();
         }
         if (isFastForward&& !historyObject.activeSelf)
@@ -86,6 +128,11 @@ public class DialogueSystem : Singleton<DialogueSystem>
         {
             if (canShowNext)
             {
+                // 在继续对话前隐藏tag
+                defaultDialog?.HideTag();
+                // 重置状态跟踪变量
+                lastWaitingForNext = false;
+                shouldShowTag = false;
                 fs.Next();
                 currentIntervalTimes = intervalTimes;
             }
@@ -94,6 +141,11 @@ public class DialogueSystem : Singleton<DialogueSystem>
     public static void StartDialogue(string path)
     {
         Debug.Log(path);
+        // 开始新对话时隐藏tag
+        instance.defaultDialog?.HideTag();
+        // 重置状态跟踪变量
+        instance.lastWaitingForNext = false;
+        instance.shouldShowTag = false;
         fs.ReadTextFromResource(path);
     }
     public void ClearGameObjects()

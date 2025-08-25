@@ -51,8 +51,8 @@ Material:
     - _DstBlend: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _SplitAmout: 0.05
-    - _SplitIntensity: 0.5
+    - _SplitAmout: 1
+    - _SplitIntensity: 1
     - _SrcBlend: 1
     - _Surface: 0
     - _UseDynamicSplitVector: 0
